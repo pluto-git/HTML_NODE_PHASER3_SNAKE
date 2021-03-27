@@ -31,6 +31,9 @@ class GameScene extends Phaser.Scene {
     c = data.c;
     score = 0;
     }
+
+    this.id = data.id;
+    this.name = data.name;
   }
   preload() {
     this.load.image('food', 'assets/image/coin.png');
@@ -39,9 +42,7 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-    if(this.isRestart === "restart"){
-      this.scene.restart();
-    }
+
     //changing the background colour
     this.objects.camera = this.cameras.add(0, 0, 640, 480);
     this.objects.camera.setBackgroundColor('#2b2e4a');
@@ -239,7 +240,7 @@ class GameScene extends Phaser.Scene {
 
     if (!snake.alive) {
       this.scene.start("FinalScene", {
-        result: "dead", score:score
+        result: "dead", score:score, name: this.name, id: this.id
       });
     }
 
@@ -331,7 +332,8 @@ function onEvent() {
   {
       timedEvent.remove(false);
       this.scene.start("FinalScene", {
-        result: "dead", score:score
+        result: "dead", score:score,
+        name: this.name, id: this.id
       });
   }
 }

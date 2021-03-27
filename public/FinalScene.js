@@ -1,3 +1,5 @@
+import {fetchingPOST} from "./fetching.js";
+
 class FinalScene extends Phaser.Scene {
   constructor() {
     super('FinalScene');
@@ -6,6 +8,9 @@ class FinalScene extends Phaser.Scene {
   init(data){
     this.result = data.result;
     this.score = data.score;
+    this.name = data.name;
+    this.id = data.id;
+    console.log("This is ID"+this.id);
   }
   preload() {
     this.load.image("restart_button", "assets/image/restart_button.png");
@@ -17,6 +22,13 @@ class FinalScene extends Phaser.Scene {
     this.objects.camera.setBackgroundColor('#2b2e4a');
 
     if(this.result === "dead"){
+      let _data = {
+        login: this.name,
+        _id: this.id,
+        score: this.score
+      };
+
+      fetchingPOST(_data);
       this.losingText = this.add.text(
           240,
           140,
@@ -26,6 +38,8 @@ class FinalScene extends Phaser.Scene {
               fontStyle: "bold"
           }
       )
+
+
 
       this.restartButton = this.add.image(320, 240, "restart_button");
       this.restartButton.setInteractive();
@@ -45,7 +59,6 @@ class FinalScene extends Phaser.Scene {
     //           fontStyle: "bold"
     //       }
     //   )
-
     //   this.nextLevelButton = this.add.image(320, 240, "nextLevel_button");
     //   this.nextLevelButton.setInteractive();
     //   this.nextLevelButton.on('pointerdown', () => {
